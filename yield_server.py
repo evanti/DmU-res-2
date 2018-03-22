@@ -137,38 +137,36 @@ class WriteWait(SystemCall):
 
 def handle_client(client,addr):
 	global income_counter
-	while True:
-		yield ReadWait(client)
-		try:
-			data = client.recv(2048)
-		except ConnectionResetError:
-			break
-		if not data:
-			break
-		try:
-			coresponse = data
-		except: continue
-		try:
-			checkresp=data.decode()
-			if control_line in checkresp:
-				income_counter+=1
-				log="From: "+str(addr)+" Time: " + str(time.time())+" Counter: "+str(income_counter)+'\n'
-				with open(log_file, 'a') as fi:
-					fi.write(log)
-		except Exception as e:
-			print(str(e))
-		response = ''
-		response += 'HTTP/1.1 200 OK\r\n'
-		response += 'Content-Type: text/plain; charset=UTF-8\r\nContent-Length: ' + str(len(
-			coresponse)) + '\r\nOrigin: ' + str(addr[0]) + '\r\nOwner: aukauk' + '\r\n\r\n'
-		response = response.encode()
-		response+= coresponse
+	# while True:
+	yield ReadWait(client)
+	try:
+		data = client.recv(2048)
+	except ConnectionResetError:
+		return
+	if not data:
+		return
+	coresponse = data
+	try:
+		checkresp=data.decode()
+		if control_line in checkresp:
+			income_counter+=1
+			log="From: "+str(addr)+" Time: " + str(time.time())+" Counter: "+str(income_counter)+'\n'
+			with open(log_file, 'a') as fi:
+				fi.write(log)
+	except Exception as e:
+		print(str(e))
+	response = ''
+	response += 'HTTP/1.1 200 OK\r\n'
+	response += 'Content-Type: text/plain; charset=UTF-8\r\nContent-Length: ' + str(len(
+		coresponse)) + '\r\nOrigin: ' + str(addr[0]) + '\r\nOwner: aukauk' + '\r\n\r\n'
+	response = response.encode()
+	response+= coresponse
 
-		yield WriteWait(client)
-		try:
-			client.send(response)
-		except:
-			pass
+	yield WriteWait(client)
+	try:
+		client.send(response)
+	except:
+		pass
 
 	client.close()
 def server(port):
