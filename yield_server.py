@@ -192,8 +192,9 @@ def monit():
 		start=income_counter
 		time.sleep(1)
 		total = income_counter-start
-		with open(monit_log, 'a') as fi:
-			fi.write(str(total)+'\n')
+		if total>0:
+			with open(monit_log, 'a') as fi:
+				fi.write(str(total)+'\n')
 
 ##############################################################################################################
 

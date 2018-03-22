@@ -17,14 +17,14 @@ def execute(adrtuple):
 			print(str(e))
 			sched.new(execute(adrtuple))
 			break
-		yield WriteWait(s, timeout=5)
+		yield WriteWait(s)
 		try:
 			s.sendall(request)
 		except Exception as e:
 			print(str(e))
 			sched.new(execute(adrtuple))
 			break
-		yield ReadWait(s, timeout=2)
+		yield ReadWait(s)
 		try:
 			resp1 = s.recv(1024)
 		except Exception as e:
@@ -33,10 +33,9 @@ def execute(adrtuple):
 			break
 
 		if 'aukauk' in resp1.decode():
-
 			success_counter+=1
 			# print("Success: ", success_counter)
-			yield Success()
+			# yield Success()
 		s.close()
 
 
