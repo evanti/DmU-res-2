@@ -200,6 +200,8 @@ def monit():
 control_line='1371648'
 log_file=os.path.join(os.path.dirname(__file__), 'serverlogz.txt')
 monit_log = os.path.join(os.path.dirname(__file__), 'monit_logs.txt')
+print(log_file)
+print(monit_log)
 income_counter=0
 sel=selectors.DefaultSelector()
 sched=Scheduler()
