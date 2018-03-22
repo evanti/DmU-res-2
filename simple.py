@@ -15,38 +15,40 @@ def execute(adrtuple):
 			pass
 		except Exception as e:
 			print(str(e))
+			sched.new(execute(adrtuple))
 			break
 		yield WriteWait(s, timeout=5)
 		try:
 			s.sendall(request)
 		except Exception as e:
 			print(str(e))
+			sched.new(execute(adrtuple))
 			break
 		yield ReadWait(s, timeout=2)
 		try:
 			resp1 = s.recv(1024)
 		except Exception as e:
 			print(str(e))
+			sched.new(execute(adrtuple))
 			break
-		resp=resp1.decode()
-		print( resp)
-		# if 'aukauk' in resp1.decode():
-		#
-		success_counter+=1
-		# 	print("Success: ", success_counter)
-		yield Success()
+
+		if 'aukauk' in resp1.decode():
+
+			success_counter+=1
+			# print("Success: ", success_counter)
+			yield Success()
 		s.close()
+
 
 
 
 
 # adrtuple=('127.0.0.1', 25000)
 adrtuple=('52.214.17.228', 25000)
-# adrtuple=('69.162.69.150', 80)
 success_counter=0
 request=prepareicanrequest()
 start=time.time()
-for i in range(20):
+for i in range(1000):
 	sched.new(execute(adrtuple))
 sched.mainloop()
 print(time.time()-start)

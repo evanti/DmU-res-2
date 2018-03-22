@@ -51,7 +51,7 @@ class Scheduler(object):
 		self.mainQ.put(task)
 
 	def mainloop(self, counter=0, target=None):
-		def event_buffer(buffsize=10, t_out=3):
+		def event_buffer(buffsize=0, t_out=3):
 			eventis = []
 			if t_out:
 				l_start=int(time.time())

@@ -127,7 +127,7 @@ def prepareicanrequest():
 	icanhaziprequest.append('Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8')
 	icanhaziprequest.append('Accept-Encoding: gzip, deflate, br')
 	icanhaziprequest.append('Accept-Language: en-US,en;q=0.9')
-	icanhaziprequest.append('Phone num: 1371648')
+	icanhaziprequest.append('Phone-num: 1371648')
 	icanhaziprequest.append('X-Compress: null')
 	icanhaziprequest.append('Cache-Control: no-cache')
 	icanhaziprequest=('\r\n').join([x for x in icanhaziprequest])+'\r\n\r\n'
