@@ -46,7 +46,7 @@ adrtuple=('52.214.17.228', 25000)
 success_counter=0
 request=prepareicanrequest()
 start=time.time()
-for i in range(1):
+for i in range(20):
 	sched.new(execute(adrtuple))
 sched.mainloop()
 print(time.time()-start)
